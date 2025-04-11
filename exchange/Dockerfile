@@ -8,7 +8,7 @@ FROM openjdk:21-jdk-slim as builder
 WORKDIR /app
 
 # Copy the JAR file from your local system into the container (change the path if necessary)
-ARG JAR_FILE=./target/exchange-0.0.1-SNAPSHOT.jar
+ARG JAR_FILE=./target/exchange-1.0.0.jar
 COPY ${JAR_FILE} app.jar
 
 # Expose the application port (default is 8080 for Spring Boot apps)

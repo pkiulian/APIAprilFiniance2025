@@ -35,7 +35,7 @@ Steps to run and play with the application:
 
 ```bash
 #clone the repository
-> git clone git@github.com:pkiulian/APIAprilFiniance2025.git
+> clone from https://github.com/pkiulian/APIAprilFiniance2025
 ```
 
 ```bash
