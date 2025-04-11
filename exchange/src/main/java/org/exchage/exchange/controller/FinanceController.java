@@ -1,8 +1,10 @@
 package org.exchage.exchange.controller;
 
+import java.util.Optional;
+
 import org.exchage.exchange.account.Account;
-import org.exchage.exchange.account.AccountService;
 import org.exchage.exchange.account.FundTransferRequest;
+import org.exchage.exchange.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +28,7 @@ public class FinanceController {
     @PostMapping("/transfer")
     public ResponseEntity<String> transferFunds(@RequestBody FundTransferRequest request) {
         try {
-            boolean success = this.accountService.transferFunds(
+            boolean success = this.accountService.safeTransfer(
                     request.getDebitAccountId(),
                     request.getCreditAccountId(),
                     request.getAmount(),
@@ -44,20 +46,20 @@ public class FinanceController {
         }
     }
 
-    // Create an account
+    // Create a new account
     @PostMapping("/createAccount")
     public ResponseEntity<Account> createAccount(@RequestBody Account account) {
-        Account createdAccount = this.accountService.createAccount(account);
-        return ResponseEntity.ok(createdAccount);
+        Account createdAccount = this.accountService.saveAccount(account);
+        return ResponseEntity.status(201).body(createdAccount);
     }
 
-    // Get account details
     @GetMapping("/account/{ownerId}")
-    public ResponseEntity<Account> getAccount(@PathVariable long ownerId) {
-        Account account = this.accountService.getAccount(ownerId);
-        if (account == null) {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<Account> getAccount(@PathVariable Long ownerId) {
+        Optional<Account> account = this.accountService.findByOwnerId(ownerId);
+        if (account.isPresent()) {
+            return ResponseEntity.ok(account.get());
+        } else {
+            return ResponseEntity.notFound().build(); // Return 404 if not found
         }
-        return ResponseEntity.ok(account);
     }
 }
