@@ -105,7 +105,7 @@ Now Check on browser: http://localhost:8080/api/finance/account/1 it should look
 accountId	1
 ownerId	1
 currency	"EUR"
-balance	845.0JS:845
+balance	845.0
 version	1
 ```
 and http://localhost:8080/api/finance/account/2:
@@ -113,7 +113,7 @@ and http://localhost:8080/api/finance/account/2:
 accountId	2
 ownerId	2
 currency	"EUR"
-balance	2155.0JS:2155
+balance	2155.0
 version	1
 ```
 
